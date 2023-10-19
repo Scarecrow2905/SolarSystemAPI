@@ -18,6 +18,7 @@
 # Mono Auto Generated Files
 mono_crash.*
 
+obj/
 # Windows image file caches
 Thumbs.db
 ehthumbs.db
