@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolarSystemAPI", "SolarSystemAPI.csproj", "{BE5E2D21-53D9-4441-A4A3-3C8E4B01AF87}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BE5E2D21-53D9-4441-A4A3-3C8E4B01AF87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE5E2D21-53D9-4441-A4A3-3C8E4B01AF87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE5E2D21-53D9-4441-A4A3-3C8E4B01AF87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE5E2D21-53D9-4441-A4A3-3C8E4B01AF87}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
