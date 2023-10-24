@@ -1,0 +1,23 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solar System API Test</title>
+</head>
+<body>
+    <h2>Solar System API Test</h2>
+    <button onclick="getData()">Get Data from API</button>
+    <div id="apiData"></div>
+    
+
+    <script>
+        async function getData() 
+        {
+            const response = await fetch('/api/celestialbody/planets');
+            const data = await response.json();
+            document.getElementById('apiData').innerHTML = JSON.stringify(data, null, 2);
+        }
+    </script>
+</body>
+</html>

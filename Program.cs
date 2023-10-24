@@ -14,6 +14,14 @@ builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+app.UseStaticFiles();
+app.UseDirectoryBrowser();
+
+app.MapGet("/", () =>
+{
+    return Results.File("wwwroot/index.html", "text/html");
+});
+
 // Sidenote: Might delete the if statement to show documentation in public
 if (app.Environment.IsDevelopment())
 {
