@@ -4,7 +4,7 @@ using SolarSystemAPI.Services;
 
 namespace SolarSystemAPI.Repositories;
 
-public class CelestialBodyRepository
+public class CelestialBodyRepository : ICelestialBodyRepository
 {
     private readonly MongoDbContext _context;
 
@@ -13,8 +13,18 @@ public class CelestialBodyRepository
         _context = context;
     }
 
-    public IMongoCollection<CelestialBody> GetCelestialBody()
+    public IMongoCollection<CelestialBody> GetCelestialBodyCollection()
     {
         return _context.GetCollection<CelestialBody>("celestialBodies");
     }
+
+    // Implement CRUD operations if needed
+    // Get by Name
+    public CelestialBody GetCelestialBodyByName(string name)
+    {
+        var collection = GetCelestialBodyCollection();
+        return collection.Find(body => body.Name == name).FirstOrDefault();
+    }
+    
+    // Add methods for Create, Update, and Delete operations
 }

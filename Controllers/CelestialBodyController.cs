@@ -1,36 +1,46 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SolarSystemAPI.Services;
+using SolarSystemAPI.Models;
+using SolarSystemAPI.Repositories;
+
 
 namespace SolarSystemAPI.Controllers;
 
 [ApiController]
-[Route("api/celestialbody")] // Base route for all actions in this controller
+[Route("api/[controller]")] 
 public class CelestialBodyController : ControllerBase
 {
-    private readonly ICelestialBodyService _celestialBodyService;
+    //private readonly ICelestialBodyService _celestialBodyService;
+    private readonly CelestialBodyRepository _celestialBodyRepository;
 
-    public CelestialBodyController(ICelestialBodyService celestialBodyService)
+    public CelestialBodyController(CelestialBodyRepository celestialBodyRepository)
     {
-        _celestialBodyService = celestialBodyService;
+        _celestialBodyRepository = celestialBodyRepository;
     }
 
-
-    [HttpGet("planets")] // Endpoint to get the list of planets
-    public IActionResult GetCelestialBodies()
-    {
-        var planets = _celestialBodyService.GetCelestialBodies();
-        return Ok(planets);
-    }
-
+    
     [HttpGet("{name}")]
-    public IActionResult GetEarthDetails(string name)
+    public IActionResult GetCelestialBody(string name)
     {
-        var celestialBodyDetails = _celestialBodyService.GetCelestialBodyByName(name);
-        if (celestialBodyDetails == null)
-        {
-            return NotFound($"{name} was not found.");
-        }
+        var celestialBody = _celestialBodyRepository.GetCelestialBodyByName(name);
 
-        return Ok(celestialBodyDetails);
+        if (celestialBody == null)
+        {
+            return NotFound();
+        }
+        
+        return Ok(celestialBody);
+    }
+
+    [HttpPost]
+    public IActionResult AddCelestialBody([FromBody] CelestialBody celestialBody)
+    {
+        // Perform any validation or business logic as needed
+        
+        // Add the celestial body to the repository
+        // May want to handle the result of the addition and return appropriate responses
+        
+        //_celestialBodyRepository.AddCelestialBody(celestialBody);
+
+        return Ok("Celestial body added successfully");
     }
 }

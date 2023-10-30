@@ -1,10 +1,18 @@
 using SolarSystemAPI.Services;
+using SolarSystemAPI.Settings;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddScoped<ICelestialBodyService, CelestialBodyService>();
+builder.Services.AddTransient<ICelestialBodyService, CelestialBodyService>();
 builder.Services.AddSingleton<IMongoDbContext, MongoDbContext>();
+
+// Kept in case of seeding another collection to DB
+// builder.Services.Configure<MongoDBSettings>(builder.Configuration.GetSection("MongoDB"));
+// builder.Services.AddSingleton<IMongoDbContext, MongoDbContext>();
+
+
+builder.Services.AddTransient<SeedingService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -34,5 +42,12 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers(); // Looks for any controllers to use, for example CelestialBodyController.cs
+
+// No need to run this anymore now that DB is populated, but kept in case more seeding is needed.
+// Seed Database, one use only needed-----!!!!
+// var seedingService = app.Services.GetRequiredService<SeedingService>();
+// seedingService.SeedDatabase();
+// ---------------------------------------!!!!
+
 
 app.Run();
