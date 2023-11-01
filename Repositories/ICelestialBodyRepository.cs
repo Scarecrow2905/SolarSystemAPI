@@ -5,6 +5,13 @@ namespace SolarSystemAPI.Services;
 
 public interface ICelestialBodyRepository
 {
-    IMongoCollection<CelestialBody> GetCelestialBodyCollection();
-    CelestialBody GetCelestialBodyByName(string name);
+    // Add methods for Create, Update, and Delete operations
+    IMongoCollection<CelestialBody> RepositoryGetCelestialBodyCollection();
+    CelestialBody RepositoryGetCelestialBodyByName(string name);
+    CelestialBody RepositoryGetCelestialBodyById(string id);
+
+    CelestialBody RepositoryCreateCelestialBody(CelestialBody body);
+    CelestialBody RepositoryUpdateCelestialBody(CelestialBody body);
+    CelestialBody RepositoryDeleteCelestialBody(CelestialBody body);
+
 }

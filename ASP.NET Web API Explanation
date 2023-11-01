@@ -1,0 +1,41 @@
+﻿In a nutshell:
+
+Controller: Handles HTTP requests and orchestrates the flow of data. It receives requests, interacts with the service to perform business logic, and sends responses back to the client.
+
+Service: Contains the business logic. It receives requests from the controller, performs any necessary operations, and interacts with the repository to retrieve or persist data.
+
+Repository: Manages the interaction with the database. It performs CRUD (Create, Read, Update, Delete) operations and provides a way for the service to interact with the underlying data storage.
+
+So, the flow typically goes from the controller to the service, and then to the repository for data operations.
+
+The repository interacts with the database, and the service contains the application's business logic. 
+
+This separation of concerns makes the code more modular, maintainable, and testable.
+
+
+
+Order:
+
+The order in which you develop components can vary based on personal preference and project requirements, 
+but a common and logical flow is to start with defining the data model and the database interaction, 
+then move on to the service layer, and finally implement the controllers.
+
+1.
+Define Data Model and Database Interaction (Repository): Start by designing your data model, 
+such as the CelestialBody class. Then, implement the repository that will handle the interaction with the database. 
+This involves CRUD operations and querying the database.
+
+2.
+Implement Service Layer: Next, create the service layer that will contain the business logic 
+and act as an intermediary between the controllers and the repository. 
+The service layer can handle things like data validation, transformation, 
+and any additional logic before interacting with the database.
+
+3.
+Create Controllers: Finally, implement the controllers that handle HTTP requests, 
+interact with the service layer to get or update data, and return appropriate responses. 
+This is where you define your API endpoints and how your application will respond to client requests.
+
+This order allows you to establish a solid foundation with the data model and database interaction before building the layers that handle business logic and HTTP requests. It also promotes a separation of concerns, making your code more modular and easier to maintain.
+
+Remember that this is just one approach, and in practice, you might find yourself revisiting and refining different layers as the project progresses. Adapt the process based on the specific needs and complexity of your application.

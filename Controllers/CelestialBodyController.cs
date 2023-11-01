@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SolarSystemAPI.Models;
-using SolarSystemAPI.Repositories;
+using SolarSystemAPI.Services;
 
 
 namespace SolarSystemAPI.Controllers;
@@ -9,19 +9,18 @@ namespace SolarSystemAPI.Controllers;
 [Route("api/[controller]")] 
 public class CelestialBodyController : ControllerBase
 {
-    //private readonly ICelestialBodyService _celestialBodyService;
-    private readonly CelestialBodyRepository _celestialBodyRepository;
-
-    public CelestialBodyController(CelestialBodyRepository celestialBodyRepository)
+    private readonly ICelestialBodyService _celestialBodyService;
+    
+    public CelestialBodyController(ICelestialBodyService celestialBodyService)
     {
-        _celestialBodyRepository = celestialBodyRepository;
+        _celestialBodyService = celestialBodyService;
     }
 
     
     [HttpGet("{name}")]
     public IActionResult GetCelestialBody(string name)
     {
-        var celestialBody = _celestialBodyRepository.GetCelestialBodyByName(name);
+        var celestialBody = _celestialBodyService.GetCelestialBodyByName(name);
 
         if (celestialBody == null)
         {
@@ -31,16 +30,28 @@ public class CelestialBodyController : ControllerBase
         return Ok(celestialBody);
     }
 
-    [HttpPost]
-    public IActionResult AddCelestialBody([FromBody] CelestialBody celestialBody)
+    [HttpGet("{id}")]
+    public IActionResult GetCelestialBodyById(string id)
     {
-        // Perform any validation or business logic as needed
-        
-        // Add the celestial body to the repository
-        // May want to handle the result of the addition and return appropriate responses
-        
-        //_celestialBodyRepository.AddCelestialBody(celestialBody);
+        var celestialBody = _celestialBodyService.GetCelestialBodyById(id);
+        if (celestialBody == null)
+            return NotFound();
 
-        return Ok("Celestial body added successfully");
+        return Ok(celestialBody);
+    }
+
+    [HttpPost]
+    public IActionResult CreateCelestialBody([FromBody] CelestialBody body)
+    {
+        try
+        {
+            var createdBody = _celestialBodyService.CreateCelestialBody(body);
+            return CreatedAtAction(nameof(GetCelestialBodyById), new { id = createdBody.Id }, createdBody);
+        }
+        catch (Exception exception)
+        {
+            // Handle exceptions, log, and return an appropriate response
+            return BadRequest(exception.Message);
+        }
     }
 }
