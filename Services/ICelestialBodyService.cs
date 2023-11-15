@@ -8,7 +8,7 @@ public interface ICelestialBodyService
     CelestialBody GetCelestialBodyByName(string name);
     CelestialBody GetCelestialBodyById(string id);
     CelestialBody CreateCelestialBody(CelestialBody body);
-    CelestialBody UpdateCelestialBody(string name, CelestialBody updatedBody);
-    CelestialBody DeleteCelestialBody(string name);
+    void UpdateCelestialBody(string name, CelestialBody updatedBody);
+    void DeleteCelestialBody(string id);
 
 }

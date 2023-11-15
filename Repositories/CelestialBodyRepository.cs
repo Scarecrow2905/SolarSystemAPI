@@ -31,7 +31,9 @@ public class CelestialBodyRepository : ICelestialBodyRepository
     public CelestialBody RepositoryGetCelestialBodyById(string id)
     {
         var collection = RepositoryGetCelestialBodyCollection();
-        var filter = Builders<CelestialBody>.Filter.Eq("_id", ObjectId.Parse(id));
+        // Might be some errors from this because of Filters.Eq needed a spesific field type inside < >
+        var filter = Builders<CelestialBody>.Filter.Eq<object>(c => c.Id, ObjectId.Parse(id));
+        
         return collection.Find(filter).FirstOrDefault();
     }
     
@@ -45,13 +47,24 @@ public class CelestialBodyRepository : ICelestialBodyRepository
         return body;
     }
 
-    public CelestialBody RepositoryUpdateCelestialBody(CelestialBody body)
+    public void RepositoryUpdateCelestialBody(string id, CelestialBody updatedBody)
     {
-        throw new NotImplementedException();
+        var collection = RepositoryGetCelestialBodyCollection();
+        var filter = Builders<CelestialBody>.Filter.Eq<object>(c => c.Id, ObjectId.Parse(id));
+
+        var update = Builders<CelestialBody>.Update
+            .Set(c => c.Name, updatedBody.Name)
+            .Set(c => c.Diameter, updatedBody.Diameter)
+            .Set(c => c.Mass, updatedBody.Mass)
+            .Set(c => c.DistanceFromSun, updatedBody.DistanceFromSun);
+
+        collection.UpdateOne(filter, update);
     }
 
-    public CelestialBody RepositoryDeleteCelestialBody(CelestialBody body)
+    public void RepositoryDeleteCelestialBody(string id)
     {
-        throw new NotImplementedException();
+        var collection = RepositoryGetCelestialBodyCollection();
+        var filter = Builders<CelestialBody>.Filter.Eq<object>(c => c.Id, ObjectId.Parse(id));
+        collection.DeleteOne(filter);
     }
 }

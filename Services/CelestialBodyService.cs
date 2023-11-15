@@ -7,17 +7,17 @@ namespace SolarSystemAPI.Services;
 public class CelestialBodyService : ICelestialBodyService
 {
 
-    private readonly CelestialBodyRepository _celestialBodyRepository;
+    private readonly ICelestialBodyRepository _celestialBodyRepository;
     
     // Constructor:
-    public CelestialBodyService(CelestialBodyRepository celestialBodyRepository)
+    public CelestialBodyService(ICelestialBodyRepository celestialBodyRepository)
     {
         _celestialBodyRepository = celestialBodyRepository;
     }
 
     public List<CelestialBody> GetCelestialBodies()
     {
-        var collection = _celestialBodyRepository.RepositoryGetCelestialBodyCollection(); // Make this in CelestialBodyRepository
+        var collection = _celestialBodyRepository.RepositoryGetCelestialBodyCollection();
         return collection.AsQueryable().ToList();
     }
 
@@ -35,16 +35,13 @@ public class CelestialBodyService : ICelestialBodyService
         return _celestialBodyRepository.RepositoryCreateCelestialBody(body);
     }
 
-    public CelestialBody UpdateCelestialBody(string name, CelestialBody body)
+    public void UpdateCelestialBody(string id, CelestialBody updatedBody)
     {
-        throw new Exception();
+        _celestialBodyRepository.RepositoryUpdateCelestialBody(id, updatedBody);
     }
 
-    public CelestialBody DeleteCelestialBody(string name)
+    public void DeleteCelestialBody(string id)
     {
-        throw new Exception();
+        _celestialBodyRepository.RepositoryDeleteCelestialBody(id);
     }
-    
-    
-
 }

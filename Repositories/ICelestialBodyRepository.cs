@@ -11,7 +11,7 @@ public interface ICelestialBodyRepository
     CelestialBody RepositoryGetCelestialBodyById(string id);
 
     CelestialBody RepositoryCreateCelestialBody(CelestialBody body);
-    CelestialBody RepositoryUpdateCelestialBody(CelestialBody body);
-    CelestialBody RepositoryDeleteCelestialBody(CelestialBody body);
+    void RepositoryUpdateCelestialBody(string id, CelestialBody body);
+    void RepositoryDeleteCelestialBody(string id);
 
 }
