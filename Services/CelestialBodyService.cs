@@ -44,4 +44,5 @@ public class CelestialBodyService : ICelestialBodyService
     {
         _celestialBodyRepository.RepositoryDeleteCelestialBody(id);
     }
+    
 }

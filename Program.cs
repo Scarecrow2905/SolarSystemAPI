@@ -10,10 +10,10 @@ builder.Services.AddScoped<ICelestialBodyRepository, CelestialBodyRepository>();
 builder.Services.AddScoped<ICelestialBodyService, CelestialBodyService>();
 
 // Kept in case of seeding another collection to DB
- builder.Services.Configure<MongoDBSettings>(builder.Configuration.GetSection("MongoDB"));
+builder.Services.Configure<MongoDBSettings>(builder.Configuration.GetSection("MongoDB"));
  
-
-builder.Services.AddTransient<SeedingService>();
+//This line, chatGPT:
+//builder.Services.AddTransient<SeedingService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -22,9 +22,8 @@ builder.Services.AddSwaggerGen();
 try
 {
     var app = builder.Build();
-
-
-// Configure the HTTP request pipeline.
+    
+    // Configure the HTTP request pipeline.
     app.UseStaticFiles();
     app.UseDirectoryBrowser();
 
@@ -43,8 +42,8 @@ try
 
 // No need to run this anymore now that DB is populated, but kept in case more seeding is needed.
 //Seed Database, one use only needed-----!!!!
-    var seedingService = app.Services.GetRequiredService<SeedingService>();
-    seedingService.SeedDatabase();
+// var seedingService = app.Services.GetRequiredService<SeedingService>();
+// seedingService.SeedDatabase();
 // --------------------------------------!!!!
 
     app.Run();

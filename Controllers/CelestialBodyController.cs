@@ -16,42 +16,25 @@ public class CelestialBodyController : ControllerBase
         _celestialBodyService = celestialBodyService;
     }
 
-    
+    [HttpGet]
+    public IActionResult GetCelestialBodies()
+    {
+        var celestialBodies = _celestialBodyService.GetCelestialBodies();
+        return Ok(celestialBodies);
+    }
+
     [HttpGet("{name}")]
-    public IActionResult GetCelestialBody(string name)
+    public IActionResult GetCelestialBodyByName(string name)
     {
         var celestialBody = _celestialBodyService.GetCelestialBodyByName(name);
-
         if (celestialBody == null)
         {
             return NotFound();
         }
-        
         return Ok(celestialBody);
     }
+    
+    
 
-    [HttpGet("{id}")]
-    public IActionResult GetCelestialBodyById(string id)
-    {
-        var celestialBody = _celestialBodyService.GetCelestialBodyById(id);
-        if (celestialBody == null)
-            return NotFound();
 
-        return Ok(celestialBody);
-    }
-
-    [HttpPost]
-    public IActionResult CreateCelestialBody([FromBody] CelestialBody body)
-    {
-        try
-        {
-            var createdBody = _celestialBodyService.CreateCelestialBody(body);
-            return CreatedAtAction(nameof(GetCelestialBodyById), new { id = createdBody.Id }, createdBody);
-        }
-        catch (Exception exception)
-        {
-            // Handle exceptions, log, and return an appropriate response
-            return BadRequest(exception.Message);
-        }
-    }
 }

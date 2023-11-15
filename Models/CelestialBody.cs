@@ -12,7 +12,7 @@ public class CelestialBody
     [Required(ErrorMessage = "Name is required")]
     [StringLength(30, ErrorMessage = "Name must not exceed 30 characters.")]
     [BsonElement("name")]
-    public string? Name { get; set; }
+    public string Name { get; set; }
     
     [BsonElement("mass")]
     public double Mass { get; set; } // Mass in kilograms
