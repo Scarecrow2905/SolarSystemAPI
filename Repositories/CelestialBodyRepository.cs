@@ -8,9 +8,9 @@ namespace SolarSystemAPI.Repositories;
 // Class that handles the interaction with the database
 public class CelestialBodyRepository : ICelestialBodyRepository
 {
-    private readonly MongoDbContext _context;
-
-    public CelestialBodyRepository(MongoDbContext context)
+    // Here was the error, it was expecting the class of MongoDbContext but it was supposed to retrieve the Interface
+    private readonly IMongoDbContext _context;
+    public CelestialBodyRepository(IMongoDbContext context)
     {
         _context = context;
     }
