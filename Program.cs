@@ -1,3 +1,4 @@
+using Microsoft.OpenApi.Models;
 using SolarSystemAPI.Repositories;
 using SolarSystemAPI.Services;
 using SolarSystemAPI.Settings;
@@ -11,14 +12,18 @@ builder.Services.AddScoped<ICelestialBodyService, CelestialBodyService>();
 
 // Kept in case of seeding another collection to DB
 builder.Services.Configure<MongoDBSettings>(builder.Configuration.GetSection("MongoDB"));
- 
-//This line, chatGPT:
+
 //builder.Services.AddTransient<SeedingService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Solar System API", Version = "v1"});
+});
+
+
 try
 {
     var app = builder.Build();
@@ -27,9 +32,9 @@ try
     app.UseStaticFiles();
     app.UseDirectoryBrowser();
 
-    app.MapGet("/", () => { return Results.File("wwwroot/index.html", "text/html"); });
+    app.MapGet("/frontEnd", () => { return Results.File("wwwroot/index.html", "text/html"); });
 
-// Sidenote: Might delete the if statement to show documentation in public
+    // Sidenote: Might delete the if statement to show documentation in public
     if (app.Environment.IsDevelopment())
     {
         app.UseSwagger();
