@@ -1,3 +1,4 @@
+using AspNetCoreRateLimit;
 using Microsoft.OpenApi.Models;
 using SolarSystemAPI.Repositories;
 using SolarSystemAPI.Services;
@@ -12,6 +13,18 @@ builder.Services.AddScoped<ICelestialBodyService, CelestialBodyService>();
 
 // Kept in case of seeding another collection to DB
 builder.Services.Configure<MongoDBSettings>(builder.Configuration.GetSection("MongoDB"));
+
+// Rate limiting configuration
+builder.Services.AddMemoryCache(); // This line adds the memory cache service, which is used by the rate limiter to store IP policies and counters in-memory. 
+builder.Services.Configure<IpRateLimitOptions>(builder.Configuration.GetSection("IpRateLimiting")); // This line configures the 'IpRateLimitOptions' using the values from "IpRateLimiting" section of my configuration. 
+builder.Services.Configure<IpRateLimitPolicies>(builder.Configuration.GetSection("IpRateLimitPolicies")); // The IpRateLimitPolicies class holds the rules for rate limiting, such as the period, limit and endpoint
+builder.Services.AddSingleton<IIpPolicyStore, MemoryCacheIpPolicyStore>(); // The IIpPolicyStore interface is responsible for storing and retrieving IP policies (rules) for rate limiting. The class uses the memory chache to store these policies.
+builder.Services.AddSingleton<IRateLimitCounterStore, MemoryCacheRateLimitCounterStore>(); // The interface is responsible for storing and retrieving counters(request counts) 
+builder.Services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>(); // The RateLimitConfiguration implementation holds the configuration values for the rate limiter
+// In summary, these lines set up the necessary services and configurations for rate limiting using the AspNetCoreRateLimit library.
+// The library uses memory cache to store IP policies and counters,
+// and these registrations ensure that the necessary components are available for rate limiting to function.
+
 
 //builder.Services.AddTransient<SeedingService>();
 

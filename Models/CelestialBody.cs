@@ -6,13 +6,13 @@ public class CelestialBody
 {
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
-    public string? Id { get; set; } 
+    public string? Id { get; } 
     
     
     [Required(ErrorMessage = "Name is required")]
     [StringLength(30, ErrorMessage = "Name must not exceed 30 characters.")]
     [BsonElement("name")]
-    public string Name { get; set; }
+    public string? Name { get; set; }
     
     [BsonElement("mass")]
     public double Mass { get; set; } // Mass in kilograms
@@ -22,9 +22,5 @@ public class CelestialBody
     
     [BsonElement("diameter")]
     public double Diameter { get; set; }
-    
-    
-    
-    
     
 }
